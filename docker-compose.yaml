@@ -187,7 +187,7 @@ services:
         - ./php-sock:/opt/billionmail/php-sock
         - ./rspamd-data:/opt/billionmail/rspamd-data
         - ./webmail-data:/opt/billionmail/webmail-data
-        - ./.env:/opt/billionmail/.env
+        # REMOVED: ./.env volume mount - Coolify handles env vars differently
         - ./conf:/opt/billionmail/conf
         - ./logs:/opt/billionmail/logs
         - ./logs/core:/opt/billionmail/core/logs
@@ -200,6 +200,13 @@ services:
         # Set custom HTTP ports to avoid conflict with nginx
         - HTTP_PORT=${HTTP_PORT:-8080}
         - HTTPS_PORT=${HTTPS_PORT:-8443}
+        # Pass all required environment variables explicitly
+        - DBNAME=${DBNAME}
+        - DBUSER=${DBUSER}
+        - DBPASS=${DBPASS}
+        - REDISPASS=${REDISPASS}
+        - BILLIONMAIL_HOSTNAME=${BILLIONMAIL_HOSTNAME}
+        - RETENTION_DAYS=${RETENTION_DAYS:-7}
       cap_add:
         - NET_BIND_SERVICE
         - NET_ADMIN
