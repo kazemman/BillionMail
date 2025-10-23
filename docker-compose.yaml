@@ -1,0 +1,57 @@
+version: "3.8"
+
+services:
+  core:
+    build: ./core
+    container_name: billionmail-core
+    restart: always
+    depends_on:
+      - postfix
+      - dovecot
+      - rspamd
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - TZ=Africa/Johannesburg
+    volumes:
+      - core_data:/data
+
+  postfix:
+    build: ./postfix
+    container_name: billionmail-postfix
+    restart: always
+    ports:
+      - "25:25"
+      - "587:587"
+    environment:
+      - TZ=Africa/Johannesburg
+    volumes:
+      - postfix_data:/data
+
+  dovecot:
+    build: ./dovecot
+    container_name: billionmail-dovecot
+    restart: always
+    ports:
+      - "993:993"
+      - "995:995"
+    environment:
+      - TZ=Africa/Johannesburg
+    volumes:
+      - dovecot_data:/data
+
+  rspamd:
+    build: ./rspamd
+    container_name: billionmail-rspamd
+    restart: always
+    environment:
+      - TZ=Africa/Johannesburg
+    volumes:
+      - rspamd_data:/data
+
+volumes:
+  core_data:
+  postfix_data:
+  dovecot_data:
+  rspamd_data:
