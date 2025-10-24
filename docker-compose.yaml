@@ -48,9 +48,10 @@ services:
         - REDISPASS=${REDISPASS}
         - RETENTION_DAYS=${RETENTION_DAYS:-7}
       volumes:
-        - ./conf/rspamd/local.d:/etc/rspamd/local.d
-        - ./conf/rspamd/statistic.conf:/etc/rspamd/statistic.conf
-        - ./conf/rspamd/rspamd.conf:/etc/rspamd/rspamd.conf 
+        # Removed config mounts - let container initialize with defaults
+        # - ./conf/rspamd/local.d:/etc/rspamd/local.d
+        # - ./conf/rspamd/statistic.conf:/etc/rspamd/statistic.conf
+        # - ./conf/rspamd/rspamd.conf:/etc/rspamd/rspamd.conf 
         - ./rspamd-data:/var/lib/rspamd
         - ./logs/rspamd:/var/log/rspamd
       restart: always
@@ -68,9 +69,10 @@ services:
       cap_add:
         - NET_BIND_SERVICE
       volumes:
-        - ./conf/dovecot/conf.d:/etc/dovecot/conf.d
-        - ./conf/dovecot/dovecot.conf:/etc/dovecot/dovecot.conf
-        - ./conf/dovecot/rsyslog.conf:/etc/rsyslog.conf
+        # Removed config mounts - let container initialize with defaults
+        # - ./conf/dovecot/conf.d:/etc/dovecot/conf.d
+        # - ./conf/dovecot/dovecot.conf:/etc/dovecot/dovecot.conf
+        # - ./conf/dovecot/rsyslog.conf:/etc/rsyslog.conf
         - ./logs/dovecot:/var/log/mail
         - ./ssl:/etc/ssl/mail
         - ./ssl-self-signed:/etc/ssl/ssl-self-signed
@@ -109,11 +111,12 @@ services:
         pgsql-billionmail:
           condition: service_started
       volumes:
-        - ./conf/postfix/main.cf:/etc/postfix/main.cf
-        - ./conf/postfix/master.cf:/etc/postfix/master.cf
-        - ./conf/postfix/conf:/etc/postfix/conf
-        - ./conf/postfix/sql:/etc/postfix/sql
-        - ./conf/postfix/rsyslog.conf:/etc/rsyslog.conf
+        # Removed config mounts - let container initialize with defaults
+        # - ./conf/postfix/main.cf:/etc/postfix/main.cf
+        # - ./conf/postfix/master.cf:/etc/postfix/master.cf
+        # - ./conf/postfix/conf:/etc/postfix/conf
+        # - ./conf/postfix/sql:/etc/postfix/sql
+        # - ./conf/postfix/rsyslog.conf:/etc/rsyslog.conf
         - ./logs/postfix:/var/log/mail
         - ./ssl:/etc/ssl/mail
         - ./postfix-data:/var/spool/postfix
@@ -150,9 +153,10 @@ services:
         - postfix-billionmail
       volumes:
         - ./webmail-data:/var/www/html
-        - ./conf/webmail/mime.types:/var/roundcube/config/mime.types
-        - ./conf/webmail:/var/roundcube/config
-        - ./conf/php:/usr/local/etc
+        # Removed config mounts - let container initialize with defaults
+        # - ./conf/webmail/mime.types:/var/roundcube/config/mime.types
+        # - ./conf/webmail:/var/roundcube/config
+        # - ./conf/php:/usr/local/etc
         - ./php-sock/:/var/run/
       environment:
         - TZ=${TZ}
@@ -180,15 +184,16 @@ services:
       volumes:
         - ./ssl:/etc/ssl/mail
         - ./ssl-self-signed:/etc/ssl/ssl-self-signed
-        - ./conf/core/fail2ban/filter.d:/etc/fail2ban/filter.d
-        - ./conf/core/fail2ban/jail.d:/etc/fail2ban/jail.d
+        # Removed config mounts - let container initialize with defaults
+        # - ./conf/core/fail2ban/filter.d:/etc/fail2ban/filter.d
+        # - ./conf/core/fail2ban/jail.d:/etc/fail2ban/jail.d
         - ./logs/fail2ban:/var/log/fail2ban
         - ./postgresql-socket:/opt/billionmail/postgresql-socket
         - ./php-sock:/opt/billionmail/php-sock
         - ./rspamd-data:/opt/billionmail/rspamd-data
         - ./webmail-data:/opt/billionmail/webmail-data
-        # REMOVED: ./.env volume mount - Coolify handles env vars differently
-        - ./conf:/opt/billionmail/conf
+        # Removed .env mount - Coolify handles env vars
+        # - ./conf:/opt/billionmail/conf
         - ./logs:/opt/billionmail/logs
         - ./logs/core:/opt/billionmail/core/logs
         - ./core-data:/opt/billionmail/core/data
