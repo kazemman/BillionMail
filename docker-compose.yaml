@@ -225,8 +225,7 @@ services:
 networks:
   billionmail-network:
     driver: bridge
-    driver_opts:
-      com.docker.network.bridge.name: br-billionmail
+    # Removed bridge name to let Docker auto-generate a unique name
     ipam:
       driver: default
       config:
