@@ -197,9 +197,9 @@ services:
       environment:
         - TZ=${TZ}
         - FAIL2BAN_INIT=${FAIL2BAN_INIT:-y}
-        # Set custom HTTP ports to avoid conflict with nginx
-        - HTTP_PORT=${HTTP_PORT:-8090}
-        - HTTPS_PORT=${HTTPS_PORT:-8453}
+        # Hardcoded ports to avoid nginx conflict
+        - HTTP_PORT=8090
+        - HTTPS_PORT=8453
         # Pass all required environment variables explicitly
         - DBNAME=${DBNAME}
         - DBUSER=${DBUSER}
@@ -211,11 +211,10 @@ services:
         - NET_BIND_SERVICE
         - NET_ADMIN
         - NET_RAW
-      # Changed to non-standard ports to avoid conflict with nginx
-      # Your nginx will proxy to these ports
+      # Hardcoded ports - no variables
       ports:
-        - "${HTTP_PORT:-8090}:${HTTP_PORT:-8090}"
-        - "${HTTPS_PORT:-8453}:${HTTPS_PORT:-8453}"
+        - "8090:8090"
+        - "8453:8453"
       restart: always
       networks:
         billionmail-network:
